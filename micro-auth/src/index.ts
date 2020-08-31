@@ -6,11 +6,11 @@ import cors from "cors";
 import 'express-async-errors';
 
 import router from "./routes";
-
+import  config from './ormconfig'
 import { natsWrapper } from "./nats_wrapper";
 
 //Connects to the Database -> then starts the express
-createConnection()
+createConnection(config)
   .then(async (connection) => {
     try {
       await connection.runMigrations();

@@ -28,7 +28,7 @@
       "typescript": "^3.3.3333"
    },
    "scripts": {
-      "start": "ts-node src/index.ts --poll",
+      "start":  "ts-node src/index.ts",
       "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts"
    }
 }

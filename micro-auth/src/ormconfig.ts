@@ -1,17 +1,17 @@
 import { ConnectionOptions } from "typeorm";
 
 const config: ConnectionOptions = {
-  type: "postgres",
-  host: "localhost",
+  type: 'postgres',
+  host: process.env.TYPEORM_HOST,
   port: 5432,
-  username: "test",
-  password: "test",
-  database: "test",
+  username: process.env.TYPEORM_USERNAME,
+  password: process.env.TYPEORM_PASSWORD,
+  database: process.env.TYPEORM_DATABASE,
   synchronize: true,
-  logging: false,
-  entities: ["src/entity/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"],
+  logging: true,
+  entities: ["src/entity/*.ts"],
+  migrations: ["src/migration/*.ts"],
+  subscribers: ["src/subscriber/*.ts"],
   cli: {
     entitiesDir: "src/entity",
     migrationsDir: "src/migration",

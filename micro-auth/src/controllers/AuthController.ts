@@ -12,35 +12,34 @@ export default class AuthController {
   static getAll = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
     const users = await userRepository.find({
-      select: ["id", "email"], //the fields to be seen in the reponse
+      select: ["id", "email", "createdAt"], //the fields to be seen in the reponse
     });
 
     if (!users || users == []) {
       return res.status(204).json({ errors: [{ message: "No Records" }] });
     }
-
     res.status(200).json(users);
   };
-
+  
   static signup = async (req: Request, res: Response) => {
     const body = req.body 
     const userRepository = getRepository(User);
     const userExist = await userRepository.findOne({ email: req.body.email });
     if (userExist) {
-      res.status(400).json({ error: "User Already Exist" });
+      res.status(400).json({ error: "User With This Email Already Exist" });
       return;
     }
+    
     let user = new User();
-
     user = body
-
     try {
       await userRepository.save(user);
     } catch (e) {
-      throw new Error("could not save the player");
+      res.status(400).json({ error: "Couldn't save user" });
+      return;
     }
 
-    res.status(200).send({ user: "user Created" });
+    res.status(200).json(user);
   };
 
   static signin = async (req: Request, res: Response) => {

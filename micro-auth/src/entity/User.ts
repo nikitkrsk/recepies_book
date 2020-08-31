@@ -4,15 +4,16 @@ import {
   Column,
   BaseEntity,
   Unique,
+  CreateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 
 import { IsEmail } from "class-validator";
 
-
 @Entity()
 @Unique(["email"])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
@@ -22,7 +23,7 @@ export class User extends BaseEntity {
   @IsEmail()
   email: string;
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
   verifiedAt: Date;
 
   @Column()
@@ -30,6 +31,12 @@ export class User extends BaseEntity {
 
   @Column()
   name: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Column()
   status: string;
