@@ -2,7 +2,6 @@ import passwordHash from "password-hash";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as jwt from "jsonwebtoken";
-import "express-async-errors";
 import jwt_decode from "jwt-decode";
 import { User } from "../entity/User";
 import { Refresh } from "../entity/Refresh";
@@ -33,9 +32,7 @@ export default class AuthController {
     const token = jwt.sign(JWTData, process.env.JWT_KEY!, { expiresIn: "30s" });
 
     // Refreshing the token
-    const refreshToken = jwt.sign(JWTData, process.env.JWT_KEY!, {
-      expiresIn: "20m",
-    });
+    const refreshToken = jwt.sign(JWTData, process.env.JWT_KEY!);
     const refreshTokens = getRepository(Refresh);
 
     const refresh = await refreshTokens.findOne({ email: user.email });

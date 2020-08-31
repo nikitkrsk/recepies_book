@@ -39,13 +39,15 @@ export default class AuthController {
       return;
     }
     let user = new User();
+    data.password = passwordHash.generate(data.password)
     user = data;
     try {
       await userRepository.save(user);
     } catch (e) {
       res.status(400).json({ error: "Couldn't save user" });
       return;
-    }
+    }  
+    delete user.password
 
     res.status(200).json(user);
   };
@@ -89,7 +91,7 @@ export default class AuthController {
       res.status(400).json({ error: "Couldn't save user" });
       return;
     }
-
+    delete user.password
     res.status(200).json(user);
   };
 
@@ -98,15 +100,13 @@ export default class AuthController {
   //
   //
   static user_promoted = async (req: Request, res: Response) => {
-    const data = req.body;
-
     // Update User
     const userRepository = getRepository(User);
     const userExist = await userRepository.findOne({
       id: req.params.id,
     });
     if (!userExist) {
-      res.status(400).json({ error: `Could not find any records with id: ${req.params.uuid}` });
+      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
       return;
     }
     userExist.role = UserRole.ADMIN;
@@ -116,12 +116,12 @@ export default class AuthController {
       res.status(400).json({ error: "Couldn't save user" });
       return;
     }
-
+    delete userExist.password
     res.status(200).json(userExist);
   };
 
   //
-  //   Promote User to ADMIN
+  //   Change user status to blocked or to active
   //
   //
   static change_user_status = async (req: Request, res: Response) => {
@@ -133,7 +133,7 @@ export default class AuthController {
       id: req.params.id,
     });
     if (!userExist) {
-      res.status(400).json({ error: `Could not find any records with id: ${req.params.uuid}` });
+      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
       return;
     }
     userExist.status = userExist.status === UserStatus.ACTIVE ? UserStatus.BLOCKED : UserStatus.ACTIVE;
@@ -144,8 +144,34 @@ export default class AuthController {
       return;
     }
 
+    delete userExist.password
     res.status(200).json(userExist);
   };
+
+  //
+  //   Delete User
+  //
+  //
+  static delete_user = async (req: Request, res: Response) => {
+    // Delete User 
+    const userRepository = getRepository(User);
+    const userExist = await userRepository.findOne({
+      id: req.params.id,
+    });
+    if (!userExist) {
+      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
+      return;
+    }
+    
+    try {
+        await userRepository.delete({ id: req.params.id });
+    } catch (e) {
+      res.status(400).json({ error: "Couldn't save user" });
+      return;
+    }
+    res.status(200).json({message: "User Was Deleted"});
+  };
+
 
   //
   //   Get All Users
@@ -154,7 +180,7 @@ export default class AuthController {
   static get_all = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
     const users = await userRepository.find({
-      select: ["id", "email", "createdAt"], //the fields to be seen in the reponse
+      select: ["id", "email", "role", "status", "createdAt"], //the fields to be seen in the reponse
     });
 
     if (!users || users == []) {

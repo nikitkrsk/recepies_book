@@ -2,18 +2,18 @@ import passwordHash from "password-hash";
 import {UserRole, UserStatus} from '../entity/User'
 export const UserSeed = [
     {
-        email : 'admin@recepies.com',
+        email : 'admin@recepies.dev',
         password : passwordHash.generate('password123'),
         firstName : 'Tyler',
-        lastName: "Derdan",
+        lastName: "Durden",
         role : UserRole.ADMIN,
         status : UserStatus.ACTIVE
     },
     {
-        email : 'test1@test.com',
+        email : 'user@recepies.dev',
         password : passwordHash.generate('password123'),
         firstName : 'John',
-        lastName: "Doe",
+        lastName: "Smith",
         role : UserRole.USER,
         status : UserStatus.ACTIVE
     },
