@@ -5,10 +5,19 @@ import {
   BaseEntity,
   Unique,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
 
 import { IsEmail } from "class-validator";
+
+export enum UserRole {
+  ADMIN = "admin",
+  USER = "user",
+}
+export enum UserStatus {
+  ACTIVE = "active",
+  BLOCKED = "blocked",
+}
 
 @Entity()
 @Unique(["email"])
@@ -27,10 +36,10 @@ export class User extends BaseEntity {
   verifiedAt: Date;
 
   @Column()
-  role: string;
+  firstName: string;
 
   @Column()
-  name: string;
+  lastName: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -38,6 +47,17 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
-  status: string;
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.USER,
+  })
+  role: UserRole;
+
+  @Column({
+    type: "enum",
+    enum: UserStatus,
+    default: UserStatus.ACTIVE,
+  })
+  status: UserStatus;
 }
