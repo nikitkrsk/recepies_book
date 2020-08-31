@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-auth
+  template:
+    metadata:
+      labels:
+        app: micro-auth
+    spec:
+      containers:
+        - name: micro-auth
+          image: nikitkrskrecepies/micro-auth
+          env:
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+            - name: NATS_CLUSTER_ID
+              value: 'recepies'
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name   
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+            - name: TYPEORM_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth-secret
+                  key: DB_HOST
+            - name: TYPEORM_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth-secret
+                  key: DB_USER
+            - name: TYPEORM_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth-secret
+                  key: DB_PASSWORD
+            - name: TYPEORM_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth-secret
+                  key: DB_NAME
+            - name: TYPEORM_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-auth-secret
+                  key: DB_PORT
+            - name: TYPEORM_CONNECTION
+              value: 'postgres'
+            - name: TYPEORM_SYNCHRONIZE
+              value: 'false'
+            - name: TYPEORM_LOGGING
+              value: 'true'
+            - name: TYPEORM_ENTITIES
+              value: 'src/entity/*.ts, modules/**/entity/*.js'
+            - name: TYPEORM_MIGRATIONS
+              value: 'src/migration/*.ts'
+            - name: TYPEORM_MIGRATIONS_DIR 
+              value: 'src/migration'
+
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-auth-srv
+spec:
+  selector:
+    app: micro-auth
+  ports:
+    - name: micro-auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
