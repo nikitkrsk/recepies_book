@@ -66,6 +66,8 @@ spec:
               value: 'src/migration/*.ts'
             - name: TYPEORM_MIGRATIONS_DIR 
               value: 'src/migration'
+            - name: SMTP_API_KEY
+              value: 'YOUR_SMTP_2_GO_KEY'
 
             
 ---

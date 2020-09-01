@@ -23,6 +23,10 @@ export default class AuthController {
       res.status(400).json({ error: "Invalid Credentials" });
       return;
     }
+    if (user.verifiedAt === null) {
+      res.status(400).json({ error: "Account is Not Verified" });
+      return;
+    }
 
     const JWTData = {
       userId: user.id,

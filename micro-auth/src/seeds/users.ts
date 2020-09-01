@@ -6,6 +6,7 @@ export const UserSeed = [
         password : passwordHash.generate('password123'),
         firstName : 'Tyler',
         lastName: "Durden",
+        verifiedAt: new Date(),
         role : UserRole.ADMIN,
         status : UserStatus.ACTIVE
     },
@@ -14,6 +15,7 @@ export const UserSeed = [
         password : passwordHash.generate('password123'),
         firstName : 'John',
         lastName: "Smith",
+        verifiedAt: new Date(),
         role : UserRole.USER,
         status : UserStatus.ACTIVE
     },

@@ -1,15 +1,17 @@
 import passwordHash from "password-hash";
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import "express-async-errors";
-import { User, UserStatus } from "../entity/User";
-import { UserRole } from "../entity/User";
+import crypto from "crypto";
 
+import { User } from "../entity/User";
+import { sendVerificationEmail } from "../helpers/send_email";
+import { EmailToken } from "../entity/EmailToken";
 export default class AuthController {
-  //
-  //   Create User
-  //
-  //
+  /*
+    
+    Create User
+  
+  */
   static signup = async (req: Request, res: Response) => {
     const data = req.body;
 
@@ -38,33 +40,95 @@ export default class AuthController {
       res.status(400).json({ error: "User With This Email Already Exist" });
       return;
     }
+
     let user = new User();
-    data.password = passwordHash.generate(data.password)
+    data.password = passwordHash.generate(data.password);
     user = data;
+    // Create a verification token for this user
+    const token = new EmailToken();
+    token.email = user.email;
+    token.token = crypto.randomBytes(16).toString("hex");
+    token.user = user;
+
     try {
       await userRepository.save(user);
+      await token.save();
+      await sendVerificationEmail(token, req.headers.host, user.email);
     } catch (e) {
       res.status(400).json({ error: "Couldn't save user" });
       return;
-    }  
-    delete user.password
+    }
+    delete user.password;
 
     res.status(200).json(user);
+    return;
   };
 
-  //
-  //   Create Admin User
-  //
-  //
-  static create_admin = async (req: Request, res: Response) => {
+  /*
+    
+    Email Validation
+  
+  */
+  static email_validation = async (req: Request, res: Response) => {
+    const lessThanOneHourAgo = (date) => {
+      const HOUR = 1000 * 60; /* ms  minute for testing*/
+      const anHourAgo = Date.now() - HOUR;
+
+      return date < anHourAgo;
+    };
+    // Check token
+    const emailTokenRepository = getRepository(EmailToken);
+    const tokenExist = await emailTokenRepository.findOne({
+      token: req.params.token,
+    });
+    if (!tokenExist) {
+      res.status(400).json({
+        error: `Your Email is Not Registered`,
+      });
+      return;
+    }
+    if (lessThanOneHourAgo(tokenExist.updatedAt)) {
+      res.status(400).json({ error: "Token Has Expired" });
+      return;
+    }
+    const userRepository = getRepository(User);
+    const userExist = await userRepository.findOne({
+      email: tokenExist.email,
+    });
+    if (!userExist) {
+      res.status(400).json({
+        error: `Could not find any records with id: ${req.params.id}`,
+      });
+      return;
+    }
+    if (userExist.verifiedAt !== null) {
+      res.status(400).json({
+        error: `User Already Verified`,
+      });
+      return;
+    }
+    userExist.verifiedAt = new Date();
+    try {
+      await userRepository.save(userExist);
+    } catch (e) {
+      res.status(400).json({ error: "Couldn't save user" });
+      return;
+    }
+    delete userExist.password;
+    res.status(200).json({message: "User Email Was Verified"});
+  };
+
+  /*
+    
+    Resend Email Validation
+  
+  */
+  static resend_email = async (req: Request, res: Response) => {
     const data = req.body;
-    // Validation
     const Joi = require("joi");
+    // Fields which can be used in request
     const schema = Joi.object().keys({
       email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(30).alphanum().required(),
-      firstName: Joi.string().min(1).max(50).alphanum().required(),
-      lastName: Joi.string().min(1).max(50).alphanum().required(),
     });
     try {
       await schema.validateAsync(data);
@@ -72,120 +136,44 @@ export default class AuthController {
       res.status(422).json({ error: "Invalid Request Data" });
       return;
     }
-
-    // Save User
     const userRepository = getRepository(User);
     const userExist = await userRepository.findOne({
       email: data.email,
     });
-    if (userExist) {
-      res.status(400).json({ error: "User With This Email Already Exist" });
-      return;
-    }
-    let user = new User();
-    user = data;
-    user.role = UserRole.ADMIN;
-    try {
-      await userRepository.save(user);
-    } catch (e) {
-      res.status(400).json({ error: "Couldn't save user" });
-      return;
-    }
-    delete user.password
-    res.status(200).json(user);
-  };
-
-  //
-  //   Promote User to ADMIN
-  //
-  //
-  static user_promoted = async (req: Request, res: Response) => {
-    // Update User
-    const userRepository = getRepository(User);
-    const userExist = await userRepository.findOne({
-      id: req.params.id,
-    });
     if (!userExist) {
-      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
+      res.status(400).json({
+        error: `Could not find any records with email: ${data.email}`,
+      });
       return;
     }
-    userExist.role = UserRole.ADMIN;
+    if (userExist.verifiedAt !== null) {
+      res.status(400).json({
+        error: `User Already Verified`,
+      });
+      return;
+    }
+    const emailTokenRepository = getRepository(EmailToken);
+    const tokenExist = await emailTokenRepository.findOne({
+      email: data.email,
+    });
+    if (!tokenExist) {
+      res.status(400).json({
+        error: `Your Email is Not Registered`,
+      });
+      return;
+    }
+    tokenExist.token = crypto.randomBytes(16).toString("hex");
     try {
-      await userRepository.save(userExist);
+      await emailTokenRepository.save(tokenExist);
+      await sendVerificationEmail(
+        tokenExist,
+        req.headers.host,
+        data.email
+      );
     } catch (e) {
       res.status(400).json({ error: "Couldn't save user" });
       return;
     }
-    delete userExist.password
-    res.status(200).json(userExist);
-  };
-
-  //
-  //   Change user status to blocked or to active
-  //
-  //
-  static change_user_status = async (req: Request, res: Response) => {
-    const data = req.body;
-
-    // Update User
-    const userRepository = getRepository(User);
-    const userExist = await userRepository.findOne({
-      id: req.params.id,
-    });
-    if (!userExist) {
-      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
-      return;
-    }
-    userExist.status = userExist.status === UserStatus.ACTIVE ? UserStatus.BLOCKED : UserStatus.ACTIVE;
-    try {
-      await userRepository.save(userExist);
-    } catch (e) {
-      res.status(400).json({ error: "Couldn't save user" });
-      return;
-    }
-
-    delete userExist.password
-    res.status(200).json(userExist);
-  };
-
-  //
-  //   Delete User
-  //
-  //
-  static delete_user = async (req: Request, res: Response) => {
-    // Delete User 
-    const userRepository = getRepository(User);
-    const userExist = await userRepository.findOne({
-      id: req.params.id,
-    });
-    if (!userExist) {
-      res.status(400).json({ error: `Could not find any records with id: ${req.params.id}` });
-      return;
-    }
-    
-    try {
-        await userRepository.delete({ id: req.params.id });
-    } catch (e) {
-      res.status(400).json({ error: "Couldn't save user" });
-      return;
-    }
-    res.status(200).json({message: "User Was Deleted"});
-  };
-
-
-  //
-  //   Get All Users
-  //
-  //
-  static get_all = async (req: Request, res: Response) => {
-    const userRepository = getRepository(User);
-    const users = await userRepository.find({
-      select: ["id", "email", "role", "status", "createdAt"], //the fields to be seen in the reponse
-    });
-
-    if (!users || users == []) {
-      return res.status(204).json({ errors: [{ message: "No Records" }] });
-    }
-    res.status(200).json(users);
+    res.status(200).json({ message: "New Email Was Send" });
   };
 }
