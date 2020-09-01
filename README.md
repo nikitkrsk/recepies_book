@@ -11,7 +11,7 @@ For this project I'm using:
 ---
 ## To Start App
 
-You will need to get free [I'm an inline-style link](https://www.smtp2go.com/) account and put your API key into /infra/k8s/auth-depl.yaml 
+You will need to get free [SMTP2GO](https://www.smtp2go.com/) account and put your API key into /infra/k8s/auth-depl.yaml 
 ```
 minikube start 
 minikube addons enable ingress
