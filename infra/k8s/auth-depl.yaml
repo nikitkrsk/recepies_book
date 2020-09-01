@@ -67,7 +67,7 @@ spec:
             - name: TYPEORM_MIGRATIONS_DIR 
               value: 'src/migration'
             - name: SMTP_API_KEY
-              value: 'YOUR_SMTP_2_GO_KEY'
+              value: 'api-96C6B80C474611EAAFCDF23C91BBF4A0'
 
             
 ---

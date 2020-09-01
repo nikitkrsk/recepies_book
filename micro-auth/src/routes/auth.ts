@@ -32,6 +32,9 @@ auth.post("/signup", UserController.signup);
 // TODO Change to post and verify on FE
 auth.get("/confirm_email/:token", UserController.email_validation);
 auth.post("/resend_email", UserController.resend_email)
+auth.put("/update_user/:id", UserController.updateUser)
+auth.get("/get_user_id/:id", UserController.getUserByID)
+auth.get("/get_user_email/:email", UserController.getUserByEmail)
 
 //auth controller
 auth.post("/signin", AuthController.signin);

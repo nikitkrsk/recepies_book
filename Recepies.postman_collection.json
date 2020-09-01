@@ -75,6 +75,11 @@
 										"key": "Content-Type",
 										"value": "application/json",
 										"type": "text"
+									},
+									{
+										"key": "x-access-token",
+										"value": "{{user_token}}",
+										"type": "text"
 									}
 								],
 								"url": {
@@ -92,7 +97,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "024d1467-fe28-4e02-87c1-bfc193da4c62"
+											"value": "b27569dd-6b7b-43a7-9cc5-7910c5c7b647"
 										}
 									]
 								}
@@ -220,6 +225,43 @@
 										"api",
 										"auth",
 										"resend_email"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE_USER",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"testing12@test.com\"\n}"
+								},
+								"url": {
+									"raw": "https://{{website}}/api/auth/update_user/:id",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"update_user",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "8367c15f-5922-491e-900d-e60da93d64fe"
+										}
 									]
 								}
 							},

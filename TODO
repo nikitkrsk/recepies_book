@@ -1,5 +1,8 @@
+change signin 
+token sessions
+
+
 delete_self
-change_password
 forgot_password
 
 force_update_password

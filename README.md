@@ -37,3 +37,8 @@ thisisunsafe
 kubectl get pods
 kubectl exec --stdin --tty POD_NAME -- /bin/bash
 ```
+
+* To Create Migration 
+```
+npm run typeorm:cli -- migration:create -n MigrationName
+```
