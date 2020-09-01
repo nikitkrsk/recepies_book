@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "5fd19025-d72c-4eee-a4ff-541736340522",
+		"name": "Recepies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "USERS",
+			"item": [
+				{
+					"name": "ADMIN_ACTIONS",
+					"item": [
+						{
+							"name": "GET_ALL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/auth/get_all",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"get_all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE_ADMIN",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "x-access-token",
+										"value": "{{user_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"password\",\n    \"email\": \"test@test.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}"
+								},
+								"url": {
+									"raw": "https://{{website}}/api/auth/create_admin",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"create_admin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "USER_PROMOTED",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://{{website}}/api/auth/user_promoted/:id",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"user_promoted",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "024d1467-fe28-4e02-87c1-bfc193da4c62"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CHANGE_STATUS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/auth/change_status/:id",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"change_status",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "024d1467-fe28-4e02-87c1-bfc193da4c62"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE_USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/auth/delete/:id",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"delete",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "USER_ACTIONS",
+					"item": [
+						{
+							"name": "SIGNUP",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"password123\",\n    \"email\": \"test@atroshenkonikita.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{website}}/api/auth/signup",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RESEND_EMAIL",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@atroshenkonikita.com\"\n}"
+								},
+								"url": {
+									"raw": "https://{{website}}/api/auth/resend_email",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"resend_email"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "AUTH",
+					"item": [
+						{
+							"name": "SIGNIN",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6cac52fc-7231-4ecb-93d0-c504a828e6e9",
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"user_token\", jsonData.token);",
+											"postman.setEnvironmentVariable(\"user_refresh_token\", jsonData.refreshToken);",
+											"postman.setEnvironmentVariable(\"user_id\", jsonData.user.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@atroshenkonikita.com\",\n    \"password\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://{{website}}/api/auth/signin",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signin"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SIGNOUT",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/auth/signout",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
