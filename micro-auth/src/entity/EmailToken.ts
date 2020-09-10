@@ -6,7 +6,7 @@ import { User } from "./User";
 
 @Entity()
 @Unique(["email"])
-export class EmailToken extends BaseEntity {
+export class EmailVerifyToken extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

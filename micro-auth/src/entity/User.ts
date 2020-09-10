@@ -6,9 +6,11 @@ import {
   Unique,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToOne,
 } from "typeorm";
 
 import { IsEmail } from "class-validator";
+import { PersonalData } from "./PersonalData";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -60,4 +62,7 @@ export class User extends BaseEntity {
     default: UserStatus.ACTIVE,
   })
   status: UserStatus;
+
+  @OneToOne(type => PersonalData, data => data.user) // specify inverse side as a second parameter
+  personal_data: PersonalData;
 }

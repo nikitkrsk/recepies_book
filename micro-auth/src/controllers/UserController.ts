@@ -5,7 +5,8 @@ import crypto from "crypto";
 
 import { User } from "../entity/User";
 import { sendVerificationEmail } from "../helpers/send_email";
-import { EmailToken } from "../entity/EmailToken";
+import { EmailVerifyToken } from "../entity/EmailToken";
+import { PersonalData } from "../entity/PersonalData";
 export default class AuthController {
   /*
     
@@ -45,7 +46,7 @@ export default class AuthController {
     data.password = passwordHash.generate(data.password);
     user = data;
     // Create a verification token for this user
-    const token = new EmailToken();
+    const token = new EmailVerifyToken();
     token.email = user.email;
     token.token = crypto.randomBytes(16).toString("hex");
     token.user = user;
@@ -71,13 +72,13 @@ export default class AuthController {
   */
   static email_validation = async (req: Request, res: Response) => {
     const lessThanOneHourAgo = (date) => {
-      const HOUR = 1000 * 60; /* ms  minute for testing*/
+      const HOUR = 1000 * 60 * 60; /* ms */
       const anHourAgo = Date.now() - HOUR;
 
       return date < anHourAgo;
     };
     // Check token
-    const emailTokenRepository = getRepository(EmailToken);
+    const emailTokenRepository = getRepository(EmailVerifyToken);
     const tokenExist = await emailTokenRepository.findOne({
       token: req.params.token,
     });
@@ -152,7 +153,7 @@ export default class AuthController {
       });
       return;
     }
-    const emailTokenRepository = getRepository(EmailToken);
+    const emailTokenRepository = getRepository(EmailVerifyToken);
     const tokenExist = await emailTokenRepository.findOne({
       email: data.email,
     });
@@ -188,6 +189,17 @@ export default class AuthController {
       password: Joi.string().min(6).max(30).alphanum(),
       firstName: Joi.string().min(1).max(50).alphanum(),
       lastName: Joi.string().min(1).max(50).alphanum(),
+      personal_data: Joi.object().keys({
+        profile_picture: Joi.string().max(200),
+        about_me: Joi.string().max(250),
+        education: Joi.string().max(250),
+        country: Joi.string().max(50),
+        experience: Joi.string().max(250),
+        gender: Joi.string().max(15),
+        age: Joi.number(),
+        instagram_link: Joi.string().max(200),
+        facebook_link: Joi.string().max(200),
+      })
     });
     try {
       await schema.validateAsync(data);
@@ -206,7 +218,23 @@ export default class AuthController {
     let user = await userRepository.findOne({ id: req.params.id });
     if (!user) {
       res.status(422).json({ error: "Invalid Request Data" });
+      return;
     }
+
+
+    // Update Personal Data
+    if (data.personal_data !== null && data.personal_data !== undefined) {
+      const userDetailsRepository = getRepository(PersonalData);
+      let userDetails = await userDetailsRepository.findOne({ user: user });
+      userDetails = { ...userDetails, ...req.body.personal_data, user };
+      try {
+        await userDetailsRepository.save(userDetails);
+      } catch (e) {
+        res.status(400).json({ error: "Couldn't save user" });
+        return;
+      }
+    }
+
 
     user = { ...user, ...req.body };
 
@@ -214,8 +242,9 @@ export default class AuthController {
       await userRepository.save(user);
     } catch (e) {
       res.status(400).json({ error: "Couldn't save user" });
+      return;
     }
-    
+
     res.status(200).json(user);
   };
 
@@ -224,28 +253,28 @@ export default class AuthController {
     Get User By Id
   
   */
- static getUserByID = async (req: Request, res: Response) => {
-  const userRepository = getRepository(User);
+  static getUserByID = async (req: Request, res: Response) => {
+    const userRepository = getRepository(User);
 
-  let user = await userRepository.findOne({ id: req.params.id });
-  if (!user) {
-    res.status(422).json({ error: "Invalid Request Data" });
-  } 
-  res.status(200).json(user);
-};
+    let user = await userRepository.findOne({ id: req.params.id });
+    if (!user) {
+      res.status(422).json({ error: "Invalid Request Data" });
+    }
+    res.status(200).json(user);
+  };
 
- /*
+  /*
     
     Get User By Email
   
   */
- static getUserByEmail = async (req: Request, res: Response) => {
-  const userRepository = getRepository(User);
+  static getUserByEmail = async (req: Request, res: Response) => {
+    const userRepository = getRepository(User);
 
-  let user = await userRepository.findOne({ email: req.params.email });
-  if (!user) {
-    res.status(422).json({ error: "Invalid Request Data" });
-  } 
-  res.status(200).json(user);
-};
+    let user = await userRepository.findOne({ email: req.params.email });
+    if (!user) {
+      res.status(422).json({ error: "Invalid Request Data" });
+    }
+    res.status(200).json(user);
+  };
 }

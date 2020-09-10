@@ -147,9 +147,7 @@ export default class AuthController {
   */
   static get_all = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
-    const users = await userRepository.find({
-      select: ["id", "email", "role", "status", "createdAt", "verifiedAt"], //the fields to be seen in the reponse
-    });
+    const users = await userRepository.find({relations: ["personal_data"]});
 
     if (!users || users == []) {
       return res.status(204).json({ errors: [{ message: "No Records" }] });
