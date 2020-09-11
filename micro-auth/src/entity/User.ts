@@ -11,6 +11,7 @@ import {
 
 import { IsEmail } from "class-validator";
 import { PersonalData } from "./PersonalData";
+import { EmailResetPassToken } from "./EmailResetPassToken";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -63,6 +64,9 @@ export class User extends BaseEntity {
   })
   status: UserStatus;
 
-  @OneToOne(type => PersonalData, data => data.user) // specify inverse side as a second parameter
+  @OneToOne((type) => EmailResetPassToken, (email) => email.user) // specify inverse side as a second parameter
+  email_sended: EmailResetPassToken;
+ 
+  @OneToOne((type) => PersonalData, (data) => data.user) // specify inverse side as a second parameter
   personal_data: PersonalData;
 }

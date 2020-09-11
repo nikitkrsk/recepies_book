@@ -5,7 +5,7 @@ import crypto from "crypto";
 
 import { User } from "../entity/User";
 import { sendVerificationEmail } from "../helpers/send_email";
-import { EmailVerifyToken } from "../entity/EmailToken";
+import { EmailVerifyToken } from "../entity/EmailVerifyToken";
 import { PersonalData } from "../entity/PersonalData";
 export default class AuthController {
   /*
@@ -52,9 +52,9 @@ export default class AuthController {
     token.user = user;
 
     try {
+      await sendVerificationEmail(token, req.headers.host, user.email);
       await userRepository.save(user);
       await token.save();
-      await sendVerificationEmail(token, req.headers.host, user.email);
     } catch (e) {
       res.status(400).json({ error: "Couldn't save user" });
       return;

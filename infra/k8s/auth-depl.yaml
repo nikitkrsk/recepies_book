@@ -49,25 +49,8 @@ spec:
                 secretKeyRef:
                   name: postgres-auth-secret
                   key: DB_NAME
-            - name: TYPEORM_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: postgres-auth-secret
-                  key: DB_PORT
-            - name: TYPEORM_CONNECTION
-              value: 'postgres'
-            - name: TYPEORM_SYNCHRONIZE
-              value: 'true'
-            - name: TYPEORM_LOGGING
-              value: 'true'
-            - name: TYPEORM_ENTITIES
-              value: 'src/entity/*.ts, modules/**/entity/*.js'
-            - name: TYPEORM_MIGRATIONS
-              value: 'src/migration/*.ts'
-            - name: TYPEORM_MIGRATIONS_DIR 
-              value: 'src/migration'
             - name: SMTP_API_KEY
-              value: 'api-96C6B80C474611EAAFCDF23C91BBF4A0'
+              value: 'SMTP_API_KEY'
 
             
 ---

@@ -3,11 +3,10 @@ export const sendVerificationEmail = async (token, host, to) => {
     const url = "https://api.smtp2go.com/v3/email/send";
     const emailbody = {
         "api_key": process.env.SMTP_API_KEY,
-        "to": [`Test Person <${to}>`],
-        "sender": "NO-REPLY Recepies Support  <hi@atroshenkonikita.com>",
+        "to": [`Recepies User <${to}>`],
+        "sender": "NO-REPLY_RECEPIES_SUPPORT <hi@atroshenkonikita.com>",
         "subject": "Verify Your Account at Recepies.dev",
         "text_body": 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + host + '\/api\/auth\/confirm_email\/' + token.token + '.\n',
-        // "html_body": "<h1>You're my favorite test person ever</h1>",
     }
     const params = {
         method: "POST",
@@ -19,7 +18,8 @@ export const sendVerificationEmail = async (token, host, to) => {
     try{
         let res = await fetch(url, params);
         return res.json();
-    }catch{
+    }catch (er){
+        console.log("Error", er)
         throw new Error()
     }
 }
@@ -27,15 +27,14 @@ export const sendVerificationEmail = async (token, host, to) => {
 export const sendResetPasswordEmail = async (token, host, to) => {
     const url = "https://api.smtp2go.com/v3/email/send";
     const emailbody = {
-        "api_key": process.env.SMTP_API_KEY,
+        "api_key": "api-13369F62E92A11EA943BF23C91BBF4A0", // TODO SECRET
         "to": [`Test Person <${to}>`],
-        "sender": "NO-REPLY Recepies Support  <hi@atroshenkonikita.com>",
-        "subject": "Verify Your Account at Recepies.dev",
+        "sender": "REPLY_RECEPIES_SUPPORT <nikita@airheadventures.com>",
+        "subject": "Recepies Platform Password Reset",
         "text_body": 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-        'https://' + host + '\/api\/auth\/reset\/' + token.token + '\n\n' +
+        'https://' + host + '\/reset_password\/' + token.token + '\n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n',
-        // "html_body": "<h1>You're my favorite test person ever</h1>",
     }
     const params = {
         method: "POST",
