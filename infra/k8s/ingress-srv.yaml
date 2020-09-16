@@ -10,7 +10,7 @@ spec:
     - host: recepies.dev
       http:
         paths:
-          - path: /api/auth/?(.*)
+          - path: /api/micro_users/?(.*)
             backend:
-              serviceName: micro-auth-srv
+              serviceName: micro-users-srv
               servicePort: 3000

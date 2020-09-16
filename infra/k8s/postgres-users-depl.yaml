@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment                                
 metadata:
-  name: micro-auth-postgres                     
+  name: micro-users-postgres                     
   labels:                                        
-    app: micro-auth-postgres
+    app: micro-users-postgres
 spec:
   selector:
     matchLabels:                                
-      app: micro-auth-postgres
+      app: micro-users-postgres
       tier: postgres
   replicas: 1
   template:                                     
     metadata:
       labels:                                   
-        app: micro-auth-postgres
+        app: micro-users-postgres
         tier: postgres
     spec:                                       
       containers:
         - image: postgres:latest                
-          name: micro-auth-postgres
+          name: micro-users-postgres
           imagePullPolicy: "IfNotPresent"
           envFrom:                               
             - secretRef:
-                name: postgres-auth-secret
+                name: postgres-users-secret
           ports:
             - containerPort: 5432                    
               name: postgres
           volumeMounts:
-            - mountPath: /var/lib/postgresql/auth
+            - mountPath: /var/lib/postgresql/users
               name: postgres-persistent-storage     
       volumes:                                       
         - name: postgres-persistent-storage
@@ -49,15 +49,15 @@ provisioner: microk8s.io/hostpat
 apiVersion: v1                                      
 kind: Service                                        
 metadata:
-  name: micro-auth-postgres                         
+  name: micro-users-postgres                         
   labels:                                           
-    app: micro-auth-postgres
+    app: micro-users-postgres
 spec:
   type: NodePort
   ports:
     - port: 5432
   selector:                                         
-    app: micro-auth-postgres
+    app: micro-users-postgres
     tier: postgres
 ---
 
@@ -66,7 +66,7 @@ apiVersion: v1
 metadata:
   name: postgres-pv
   labels:
-    app:  micro-auth-postgres
+    app:  micro-users-postgres
     type: local
 spec:
   storageClassName: microk8s-hostpath
@@ -85,7 +85,7 @@ apiVersion: v1
 metadata:
   name: postgres-pv-claim
   labels:
-    app: micro-auth-postgres
+    app: micro-users-postgres
 spec:
   storageClassName: microk8s-hostpath
   capacity:

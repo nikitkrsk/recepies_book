@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micro-auth-depl
+  name: micro-users-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: micro-auth
+      app: micro-users
   template:
     metadata:
       labels:
-        app: micro-auth
+        app: micro-users
     spec:
       containers:
-        - name: micro-auth
-          image: nikitkrskrecepies/micro-auth
+        - name: micro-users
+          image: nikitkrskrecepies/micro-users
           env:
             - name: NATS_URL
               value: 'http://nats-srv:4222'
@@ -32,37 +32,37 @@ spec:
             - name: TYPEORM_HOST
               valueFrom:
                 secretKeyRef:
-                  name: postgres-auth-secret
+                  name: postgres-users-secret
                   key: DB_HOST
             - name: TYPEORM_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: postgres-auth-secret
+                  name: postgres-users-secret
                   key: DB_USER
             - name: TYPEORM_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-auth-secret
+                  name: postgres-users-secret
                   key: DB_PASSWORD
             - name: TYPEORM_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: postgres-auth-secret
+                  name: postgres-users-secret
                   key: DB_NAME
             - name: SMTP_API_KEY
-              value: 'SMTP_API_KEY'
+              value: 'api-96C6B80C474611EAAFCDF23C91BBF4A0'
 
             
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: micro-auth-srv
+  name: micro-users-srv
 spec:
   selector:
-    app: micro-auth
+    app: micro-users
   ports:
-    - name: micro-auth
+    - name: micro-users
       protocol: TCP
       port: 3000
       targetPort: 3000

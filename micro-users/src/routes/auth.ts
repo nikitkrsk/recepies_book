@@ -28,15 +28,6 @@ auth.post(
 auth.delete("/delete/:id", [checkJwt], AdminController.delete_user);
 auth.get("/get_all", AdminController.get_all);
 
-// User controller
-auth.post("/signup", UserController.signup);
-// TODO Change to post and verify on FE
-auth.get("/confirm_email/:token", UserController.email_validation);
-auth.post("/resend_email", UserController.resend_email)
-auth.put("/update_user/:id", UserController.updateUser)
-auth.get("/get_user_id/:id", UserController.getUserByID)
-auth.get("/get_user_email/:email", UserController.getUserByEmail)
-
 // Auth controller
 auth.post("/signin", AuthController.signin);
 auth.post("/refresh_token", AuthController.refreshToken);

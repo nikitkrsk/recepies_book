@@ -8,8 +8,8 @@ build:
   local:
     push: false
   artifacts:
-    - image: nikitkrskrecepies/micro-auth
-      context: micro-auth
+    - image: nikitkrskrecepies/micro-users
+      context: micro-users
       docker:
         dockerfile: Dockerfile
       sync:
