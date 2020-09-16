@@ -17,14 +17,15 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://{{website}}/api/auth/get_all",
+									"raw": "https://{{website}}/api/micro_users/admin/get_all",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"admin",
 										"get_all"
 									]
 								}
@@ -52,14 +53,15 @@
 									"raw": "{\n    \"password\": \"password\",\n    \"email\": \"test@test.com\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}"
 								},
 								"url": {
-									"raw": "https://{{website}}/api/auth/create_admin",
+									"raw": "https://{{website}}/api/micro_users/admin/create_admin",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"admin",
 										"create_admin"
 									]
 								}
@@ -83,21 +85,22 @@
 									}
 								],
 								"url": {
-									"raw": "https://{{website}}/api/auth/user_promoted/:id",
+									"raw": "https://{{website}}/api/micro_users/admin/user_promoted/:id",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"admin",
 										"user_promoted",
 										":id"
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": "b27569dd-6b7b-43a7-9cc5-7910c5c7b647"
+											"value": "2b3f95e4-623c-4a24-a820-47418ecdbf3e"
 										}
 									]
 								}
@@ -108,23 +111,30 @@
 							"name": "CHANGE_STATUS",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{user_token}}",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://{{website}}/api/auth/change_status/:id",
+									"raw": "https://{{website}}/api/micro_users/admin/change_status/:id",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"admin",
 										"change_status",
 										":id"
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": "024d1467-fe28-4e02-87c1-bfc193da4c62"
+											"value": "2b3f95e4-623c-4a24-a820-47418ecdbf3e"
 										}
 									]
 								}
@@ -135,23 +145,30 @@
 							"name": "DELETE_USER",
 							"request": {
 								"method": "DELETE",
-								"header": [],
+								"header": [
+									{
+										"key": "x-access-token",
+										"value": "{{user_token}}",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "https://{{website}}/api/auth/delete/:id",
+									"raw": "https://{{website}}/api/micro_users/admin/delete/:id",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"admin",
 										"delete",
 										":id"
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": ""
+											"value": "2b3f95e4-623c-4a24-a820-47418ecdbf3e"
 										}
 									]
 								}
@@ -186,14 +203,15 @@
 									}
 								},
 								"url": {
-									"raw": "https://{{website}}/api/auth/signup",
+									"raw": "https://{{website}}/api/micro_users/user/signup",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"user",
 										"signup"
 									]
 								}
@@ -216,14 +234,15 @@
 									"raw": "{\n    \"email\": \"test@atroshenkonikita.com\"\n}"
 								},
 								"url": {
-									"raw": "https://{{website}}/api/auth/resend_email",
+									"raw": "https://{{website}}/api/micro_users/user/resend_email",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"user",
 										"resend_email"
 									]
 								}
@@ -243,24 +262,81 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"testing12@test.com\"\n}"
+									"raw": "{\n    \"email\": \"test@test.com\",\n    \"personal_data\": {\n        \"country\": \"Russia\"\n    }\n}"
 								},
 								"url": {
-									"raw": "https://{{website}}/api/auth/update_user/:id",
+									"raw": "https://{{website}}/api/micro_users/user/update_user/:id",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
-										"auth",
+										"micro_users",
+										"user",
 										"update_user",
 										":id"
 									],
 									"variable": [
 										{
 											"key": "id",
-											"value": "8367c15f-5922-491e-900d-e60da93d64fe"
+											"value": "c3228df5-9545-446c-a59a-750b9f7a683f"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET_USER_BY_ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/micro_users/user/get_user_id/:id",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"micro_users",
+										"user",
+										"get_user_id",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "dcb02bd4-fa71-41b3-a6a5-10a0e66c0cbf"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET_USER_BY_EMAIL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/micro_users/user/get_user_email/:email",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"micro_users",
+										"user",
+										"get_user_email",
+										":email"
+									],
+									"variable": [
+										{
+											"key": "email",
+											"value": "test@atroshenkonikita.com"
 										}
 									]
 								}
@@ -302,7 +378,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"test@atroshenkonikita.com\",\n    \"password\": \"password123\"\n}",
+									"raw": "{\n    \"email\": \"admin@recepies.dev\",\n    \"password\": \"password123\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -310,13 +386,14 @@
 									}
 								},
 								"url": {
-									"raw": "https://{{website}}/api/auth/signin",
+									"raw": "https://{{website}}/api/micro_users/auth/signin",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
+										"micro_users",
 										"auth",
 										"signin"
 									]
@@ -330,15 +407,113 @@
 								"method": "POST",
 								"header": [],
 								"url": {
-									"raw": "https://{{website}}/api/auth/signout",
+									"raw": "https://{{website}}/api/micro_users/auth/signout",
 									"protocol": "https",
 									"host": [
 										"{{website}}"
 									],
 									"path": [
 										"api",
+										"micro_users",
 										"auth",
 										"signout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "RESET_PASSWORD",
+					"item": [
+						{
+							"name": "FORGOT_PASSWORD",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@atroshenkonikita.com\"\n}"
+								},
+								"url": {
+									"raw": "https://{{website}}/api/micro_users/reset_password/forgot_password",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"micro_users",
+										"reset_password",
+										"forgot_password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "RESET_PASSWORD",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"secret12\"\n}"
+								},
+								"url": {
+									"raw": "https://{{website}}/api/micro_users/reset_password/reset_password/:token",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"micro_users",
+										"reset_password",
+										"reset_password",
+										":token"
+									],
+									"variable": [
+										{
+											"key": "token",
+											"value": "4aa8653f590ee8fc0d807a55f4950e62"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET_ALL_PASS_CHANGES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://{{website}}/api/micro_users/reset_password/get_passwords_changes",
+									"protocol": "https",
+									"host": [
+										"{{website}}"
+									],
+									"path": [
+										"api",
+										"micro_users",
+										"reset_password",
+										"get_passwords_changes"
 									]
 								}
 							},

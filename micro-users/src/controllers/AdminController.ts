@@ -4,6 +4,8 @@ import { getRepository } from "typeorm";
 
 import { User, UserStatus } from "../entity/User";
 import { UserRole } from "../entity/User";
+import user from "../routes/user";
+import { sendBlockedAccountEmail } from "../helpers/send_email";
 
 export default class AuthController {
   /*
@@ -85,8 +87,6 @@ export default class AuthController {
   
   */
   static change_user_status = async (req: Request, res: Response) => {
-    const data = req.body;
-
     // Update User
     const userRepository = getRepository(User);
     const userExist = await userRepository.findOne({
@@ -98,10 +98,14 @@ export default class AuthController {
       });
       return;
     }
+
     userExist.status =
       userExist.status === UserStatus.ACTIVE
         ? UserStatus.BLOCKED
         : UserStatus.ACTIVE;
+    if (userExist.status === UserStatus.BLOCKED) {
+      await sendBlockedAccountEmail(userExist.email, userExist.firstName);
+    }
     try {
       await userRepository.save(userExist);
     } catch (e) {
@@ -147,7 +151,7 @@ export default class AuthController {
   */
   static get_all = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
-    const users = await userRepository.find({relations: ["personal_data"]});
+    const users = await userRepository.find({ relations: ["personal_data"] });
 
     if (!users || users == []) {
       return res.status(204).json({ errors: [{ message: "No Records" }] });

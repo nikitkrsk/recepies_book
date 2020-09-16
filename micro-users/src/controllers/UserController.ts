@@ -256,7 +256,7 @@ export default class AuthController {
   static getUserByID = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
 
-    let user = await userRepository.findOne({ id: req.params.id });
+    let user = await userRepository.findOne({ id: req.params.id }, {relations: ["personal_data"]});
     if (!user) {
       res.status(422).json({ error: "Invalid Request Data" });
     }
@@ -271,7 +271,7 @@ export default class AuthController {
   static getUserByEmail = async (req: Request, res: Response) => {
     const userRepository = getRepository(User);
 
-    let user = await userRepository.findOne({ email: req.params.email });
+    let user = await userRepository.findOne({ email: req.params.email }, {relations: ["personal_data"]});
     if (!user) {
       res.status(422).json({ error: "Invalid Request Data" });
     }

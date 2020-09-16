@@ -16,5 +16,13 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: nikitkrskrecepies/micro-front-end
+      context: micro-front-end
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
         
     

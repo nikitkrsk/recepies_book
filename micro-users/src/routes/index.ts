@@ -12,6 +12,6 @@ router.use("/api/micro_users/auth", auth);
 router.use("/api/micro_users/user", user);
 router.use("/api/micro_users/admin", admin);
 router.use("/api/micro_users/reset_password", reset_password);
-router.use("*", not_found);
+router.use("/api/micro_users/*", not_found);
 
 export default router;

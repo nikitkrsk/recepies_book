@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: micro-front-end-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: micro-front-end
+  template:
+    metadata:
+      labels:
+        app: micro-front-end
+    spec:
+      containers:
+        - name: micro-front-end
+          image: nikitkrskrecepies/micro-front-end
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: micro-front-end-srv
+spec:
+  selector:
+    app: micro-front-end
+  ports:
+    - name: micro-front-end
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

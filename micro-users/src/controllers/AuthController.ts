@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import * as jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
-import { User } from "../entity/User";
+import { User, UserStatus } from "../entity/User";
 import { Refresh } from "../entity/Refresh";
 
 export default class AuthController {
@@ -25,6 +25,10 @@ export default class AuthController {
     }
     if (user.verifiedAt === null) {
       res.status(400).json({ error: "Account is Not Verified" });
+      return;
+    }
+    if (user.status === UserStatus.BLOCKED) {
+      res.status(400).json({ error: "Your Account is Blocked, Please Contact the Administrator" });
       return;
     }
 

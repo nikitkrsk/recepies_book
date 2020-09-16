@@ -14,3 +14,7 @@ spec:
             backend:
               serviceName: micro-users-srv
               servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: micro-front-end-srv
+              servicePort: 3000
