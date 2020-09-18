@@ -12,7 +12,7 @@ import { translations } from "./translations/Translation";
 
 ReactDOM.render(
   <Provider store={store}>
-    <I18n translations={translations} >
+    <I18n translations={translations}>
       <PersistGate loading={null} persistor={persistor}>
         <App />
       </PersistGate>
