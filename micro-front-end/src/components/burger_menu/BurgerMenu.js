@@ -25,7 +25,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import ColorLensIcon from "@material-ui/icons/ColorLens";
+import ChangeThemeButton from "./ChangeThemeButton";
+import PropTypes from "prop-types";
 
 const drawerWidth = 240;
 
@@ -144,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MiniDrawer() {
+const Navigation = (props, context) => {
   const theme = useTheme();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -176,7 +177,7 @@ export default function MiniDrawer() {
   };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
+  const renderProfileMenu = (
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -192,7 +193,7 @@ export default function MiniDrawer() {
   );
   const mobileMenuId = "primary-search-account-menu-mobile";
 
-  const renderMobileMenu = (
+  const renderMobileProfileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -210,6 +211,13 @@ export default function MiniDrawer() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+      <MenuItem>
+      <ChangeThemeButton
+              context={context}
+            />
+             <p>Choose Theme</p>
+      </MenuItem>
+      
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
@@ -271,15 +279,10 @@ export default function MiniDrawer() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-          <IconButton
-              aria-label="chuoose color scheme"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <ColorLensIcon />
-            </IconButton>
+          
+            <ChangeThemeButton
+              context={context}
+            />
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -314,8 +317,8 @@ export default function MiniDrawer() {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      {renderProfileMenu}
+      {renderMobileProfileMenu}
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -364,3 +367,9 @@ export default function MiniDrawer() {
     </div>
   );
 }
+
+Navigation.contextTypes = {
+  t: PropTypes.func.isRequired,
+};
+
+export default Navigation

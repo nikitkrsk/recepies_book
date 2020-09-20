@@ -8,15 +8,18 @@ import {
   changeExampleData,
   changeExampleDataPersisted,
 } from "../components/redux_example/store/exampleReducers";
+import { changeTheme } from "../components/burger_menu/store/ChooseThemeReducers";
+
 import { i18nState } from "redux-i18n";
 const persistConfig = {
   key: "someData",
-  whitelist: ['changeExampleDataPersisted'],
+  whitelist: ["changeExampleDataPersisted", "changeTheme"],
   storage,
 };
 
 const rootReducer = combineReducers({
   changeExampleDataPersisted,
+  changeTheme,
   changeExampleData,
   i18nState,
 });
