@@ -89,6 +89,35 @@ export const themesConfig = {
       danger: "orange",
     },
   },
+  light12: {
+		palette: {
+			type: 'light',
+			primary: {
+				light: '#FFFAF6',
+				main: '#FFEDE2',
+				dark: '#FFE0CF'
+			},
+			secondary: {
+				light: '#DBD8F7',
+				main: '#887CE3',
+				dark: '#584CD0',
+				contrastText: '#FFFFFF'
+			},
+			background: {
+				paper: '#FFFFFF',
+				default: '#FCF8F5'
+			},
+			error: red
+    },
+    props: {
+      MuiSvgIcon: {
+        htmlColor: '#757A8D',
+      }
+    },
+		status: {
+			danger: 'orange'
+		}
+	},
   dark1: {
     palette: {
       type: "dark",
