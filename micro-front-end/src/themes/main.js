@@ -128,7 +128,7 @@ export const themesConfig = {
       },
       secondary: {
         light: "#B8E1D9",
-        main: "#129B7F",
+        main: "#129B7F", 
         dark: "#056D4F",
         contrastText: "#FFFFFF",
       },
@@ -157,7 +157,7 @@ export const themesConfig = {
       },
       secondary: {
         light: "#FFC8C7",
-        main: "#FE4644",
+        main: "#c7c7c7", //
         dark: "#FD201F",
         contrastText: "#FFFFFF",
       },
@@ -169,7 +169,7 @@ export const themesConfig = {
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#FE4644',
+        htmlColor: '#FFFFFF',
       }
     },  
     status: {

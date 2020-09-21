@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 // import ReduxExample from '../components/redux_example/ReduxExample'
 import BurgerMenu from "../components/burger_menu/BurgerMenu";
 import { themesConfig } from "../themes/main";
-import Register from './register_page/Register'
+import SigninPage from './signin/index'
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -18,7 +18,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <BurgerMenu />
-      <Register />
+      <SigninPage />
       {/* <SelectLanguage />
       <ReduxExample /> */}
     </ThemeProvider>
