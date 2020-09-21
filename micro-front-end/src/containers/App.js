@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// import SelectLanguage from '../components/select_language/SelectLanguage'
+import SelectLanguage from "../components/select_language/SelectLanguage";
 // import ReduxExample from '../components/redux_example/ReduxExample'
 import BurgerMenu from "../components/burger_menu/BurgerMenu";
 import { themesConfig } from "../themes/main";
-import SigninPage from './signin/index'
+import SigninPage from "./signin/index";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 
@@ -17,10 +18,18 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <BurgerMenu />
-      <SigninPage />
-      {/* <SelectLanguage />
-      <ReduxExample /> */}
+      <Router>
+        <BurgerMenu />
+
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => <SelectLanguage {...props} />}
+          />
+          <Route path="/auth" render={(props) => <SigninPage {...props} />} />
+        </Switch>
+      </Router>
     </ThemeProvider>
   );
 }

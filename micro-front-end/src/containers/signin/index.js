@@ -16,7 +16,6 @@ import Login from "./login_page/Login";
 import Register from "./register_page/Register"
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-  console.log("value", value, "index:", index)
   return (
     <div
       role="tabpanel"
@@ -71,7 +70,6 @@ export default function SigninPage() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(" Body new Value ", newValue)
     setValue(newValue);
   };
 
