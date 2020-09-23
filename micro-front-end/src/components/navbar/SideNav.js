@@ -15,12 +15,11 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { MenuItems } from "./MenuItems";
-import { setMenuOpen } from "./store/menu_open/MenuOpenActions"
-
+import { setMenuOpen } from "./store/menu_open/MenuOpenActions";
+import { setCurrentPage } from "./store/current_page/CurrentPageActions";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
@@ -53,6 +52,22 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
+  },
+  activePage: {
+    background: theme.palette.primary.main,
+    "&:hover": {
+      background: theme.palette.primary.main,
+    },
+  },
+  activePageOpen: {
+    borderRadius: "0 0 25% 0",
+  },
+  listItem: {
+    padding: "0",
+  },
 }));
 
 const SideNav = () => {
@@ -60,16 +75,50 @@ const SideNav = () => {
   const classes = useStyles();
   const state = useSelector((state) => ({
     menuOpen: state.changeMenuOpen.menuOpen,
+    currentPage: state.changeCurrentPage.currentPage,
   }));
   const dispatch = useDispatch();
 
   const handleDrawerClose = () => {
-    dispatch(setMenuOpen(false))
+    dispatch(setMenuOpen(false));
   };
- 
+  const setPage = (event) => {
+    dispatch(setCurrentPage(event.currentTarget.id));
+  };
 
+  const renderMenu = (type) => {
+    return MenuItems[type].map((item, i) => {
+      return (
+        <List className={classes.listItem}>
+          <Link
+            to={{
+              pathname: item.route,
+            }}
+            className={classes.link}
+            id={item.name}
+            onClick={(event) => setPage(event)}
+          >
+            <ListItem
+              button
+              key={item.name}
+              className={
+                state.currentPage === item.name
+                  ? clsx(classes.activePage, {
+                      [classes.activePageOpen]: state.menuOpen,
+                    })
+                  : ""
+              }
+            >
+              <ListItemIcon>{<item.icon />}</ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </Link>
+        </List>
+      );
+    });
+  };
   return (
-     <>
+    <>
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -93,46 +142,12 @@ const SideNav = () => {
           </IconButton>
         </div>
         <Divider />
-        {MenuItems.main.map((item, i) => {
-          return (
-            <List>
-              <Link
-                to={{
-                  pathname: item.route,
-                }}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <ListItem button key={item.name}>
-                  <ListItemIcon>{<item.icon />}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItem>
-              </Link>
-            </List>
-          );
-        })}
+        {renderMenu("main")}
         <Divider />
-        {MenuItems.user.map((item, i) => {
-          return (
-            <List>
-              <Link
-                to={{
-                  pathname: item.route,
-                }}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <ListItem button key={item.name}>
-                  <ListItemIcon>{<item.icon />}</ListItemIcon>
-                  <ListItemText primary={item.name} />
-                </ListItem>
-              </Link>
-            </List>
-          );
-        })}
+        {renderMenu("user")}
       </Drawer>
     </>
   );
 };
-
-
 
 export default SideNav;

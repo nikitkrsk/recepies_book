@@ -9,11 +9,12 @@ import {
   changeExampleDataPersisted,
 } from "../components/redux_example/store/exampleReducers";
 import { changeTheme } from "../components/navbar/store/choose_theme/ChooseThemeReducers";
-import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers"
+import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers";
+import { changeCurrentPage } from "../components/navbar/store/current_page/CurrentPageReducers"
 import { i18nState } from "redux-i18n";
 const persistConfig = {
   key: "someData",
-  whitelist: ["changeExampleDataPersisted", "changeTheme"],
+  whitelist: ["changeExampleDataPersisted", "changeTheme", "changeCurrentPage"],
   storage,
 };
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   changeExampleDataPersisted,
   changeMenuOpen,
   changeTheme,
+  changeCurrentPage,
   changeExampleData,
   i18nState,
 });
