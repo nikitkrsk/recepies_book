@@ -20,10 +20,10 @@ const SelectLanguage = (props, context) => {
     props.changeLanguage(event.target.value);
   };
   return <>
-  <dic>
+  <div style={{fontSize: '10px', margin: "200px 200px"}}>
       <button onClick={handleChange} value='en'>{context.t('English')}</button>
       <button onClick={handleChange} value='ru'>{context.t('Russian')}</button>
-  </dic>
+  </div>
   </>;
 };
 

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'center',
     },
     avatar: {
+      background: theme.palette.primary.main,
       margin: theme.spacing(1),
     },
     form: {
@@ -36,7 +37,7 @@ const Login = () => {
   return (
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
+        <LockOutlinedIcon/>
       </Avatar>
       <Typography component="h1" variant="h5">
         Sign in

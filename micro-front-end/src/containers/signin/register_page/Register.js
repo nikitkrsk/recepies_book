@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
       alignItems: 'center',
     },
     avatar: {
+      background: theme.palette.primary.main,
       margin: theme.spacing(1),
     },
     form: {

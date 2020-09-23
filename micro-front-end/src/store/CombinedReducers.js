@@ -8,8 +8,8 @@ import {
   changeExampleData,
   changeExampleDataPersisted,
 } from "../components/redux_example/store/exampleReducers";
-import { changeTheme } from "../components/burger_menu/store/ChooseThemeReducers";
-
+import { changeTheme } from "../components/navbar/store/choose_theme/ChooseThemeReducers";
+import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers"
 import { i18nState } from "redux-i18n";
 const persistConfig = {
   key: "someData",
@@ -19,6 +19,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   changeExampleDataPersisted,
+  changeMenuOpen,
   changeTheme,
   changeExampleData,
   i18nState,

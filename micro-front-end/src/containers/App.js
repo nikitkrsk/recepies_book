@@ -2,13 +2,15 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import SelectLanguage from "../components/select_language/SelectLanguage";
-// import ReduxExample from '../components/redux_example/ReduxExample'
-import BurgerMenu from "../components/burger_menu/BurgerMenu";
-import { themesConfig } from "../themes/main";
-import SigninPage from "./signin/index";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+
+import SelectLanguage from "../components/select_language/SelectLanguage";
+// import ReduxExample from '../components/redux_example/ReduxExample'
+import NavBar from "../components/navbar/index";
+import { themesConfig } from "../themes/main";
+import SigninPage from "./signin/index";
+
 
 function App() {
   const state = useSelector((state) => ({
@@ -19,7 +21,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <BurgerMenu />
+        <NavBar />
 
         <Switch>
           <Route

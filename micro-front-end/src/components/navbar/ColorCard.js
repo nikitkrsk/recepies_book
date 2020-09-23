@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "./store/ChooseThemeActions";
+import { setTheme } from "./store/choose_theme/ChooseThemeActions";
 
 const ColorCard = ({ colors, theme }) => {
   const state = useSelector((state) => ({
