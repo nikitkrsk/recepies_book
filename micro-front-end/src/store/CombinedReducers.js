@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { i18nState } from "redux-i18n";
 
 import {
   changeExampleData,
@@ -10,11 +11,16 @@ import {
 } from "../components/redux_example/store/exampleReducers";
 import { changeTheme } from "../components/navbar/store/choose_theme/ChooseThemeReducers";
 import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers";
-import { changeCurrentPage } from "../components/navbar/store/current_page/CurrentPageReducers"
-import { i18nState } from "redux-i18n";
+import { changeCurrentPage } from "../components/navbar/store/current_page/CurrentPageReducers";
+import { loginUser } from "../containers/signin/login_page/store/LoginReducers";
 const persistConfig = {
   key: "someData",
-  whitelist: ["changeExampleDataPersisted", "changeTheme", "changeCurrentPage"],
+  whitelist: [
+    "changeExampleDataPersisted",
+    "changeTheme",
+    "changeCurrentPage",
+    "loginUser",
+  ],
   storage,
 };
 
@@ -23,6 +29,7 @@ const rootReducer = combineReducers({
   changeMenuOpen,
   changeTheme,
   changeCurrentPage,
+  loginUser,
   changeExampleData,
   i18nState,
 });
