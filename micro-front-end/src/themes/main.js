@@ -60,6 +60,30 @@ export const themesConfig = {
       danger: "orange",
     },
   },
+  dark3: {
+		palette: {
+			type: 'dark',
+			primary: {
+				light: '#C2C8D2',
+				main: '#354968',
+				dark: '#16213A'
+			},
+			secondary: {
+				light: '#F4CFCA',
+				main: '#D55847',
+				dark: '#C03325',
+				contrastText: '#FFFFFF'
+			},
+			background: {
+				paper: '#23354E',
+				default: '#1B2A3F'
+			},
+			error: red
+		},
+		status: {
+			danger: 'orange'
+		}
+	},
   light5: {
     palette: {
       type: "light",

@@ -23,6 +23,7 @@ export const MenuItems = {
       usersCanSee: [],
       route: "/",
     },
+    
   ],
   user: [
     {

@@ -13,6 +13,7 @@ import { changeTheme } from "../components/navbar/store/choose_theme/ChooseTheme
 import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers";
 import { changeCurrentPage } from "../components/navbar/store/current_page/CurrentPageReducers";
 import { loginUser } from "../containers/signin/login_page/store/LoginReducers";
+import { showNotification } from "../components/notifications/store/notificationReducers"
 const persistConfig = {
   key: "someData",
   whitelist: [
@@ -25,6 +26,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
+  showNotification,
   changeExampleDataPersisted,
   changeMenuOpen,
   changeTheme,
