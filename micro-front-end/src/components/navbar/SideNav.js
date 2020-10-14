@@ -87,35 +87,35 @@ const SideNav = () => {
   };
 
   const renderMenu = (type) => {
-    return MenuItems[type].map((item, i) => {
-      return (
-        <List className={classes.listItem}>
-          <Link
-            to={{
-              pathname: item.route,
-            }}
-            className={classes.link}
-            id={item.name}
-            onClick={(event) => setPage(event)}
-          >
-            <ListItem
-              button
-              key={item.name}
-              className={
-                state.currentPage === item.name
-                  ? clsx(classes.activePage, {
-                      [classes.activePageOpen]: state.menuOpen,
-                    })
-                  : ""
-              }
+    return MenuItems.filter(el => el.type === type).map((item, i) => {
+        return (
+          <List className={classes.listItem}>
+            <Link
+              to={{
+                pathname: item.path,
+              }}
+              className={classes.link}
+              id={item.name}
+              onClick={(event) => setPage(event)}
             >
-              <ListItemIcon>{<item.icon />}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItem>
-          </Link>
-        </List>
-      );
-    });
+              <ListItem
+                button
+                key={item.name}
+                className={
+                  state.currentPage === item.name
+                    ? clsx(classes.activePage, {
+                        [classes.activePageOpen]: state.menuOpen,
+                      })
+                    : ""
+                }
+              >
+                <ListItemIcon>{<item.icon />}</ListItemIcon>
+                <ListItemText primary={item.name} />
+              </ListItem>
+            </Link>
+          </List>
+        );
+      });
   };
   return (
     <>
