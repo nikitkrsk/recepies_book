@@ -15,12 +15,11 @@ function App() {
     theme: state.changeTheme.theme,
   }));
   const theme = createMuiTheme(themesConfig[state.theme]);
-  const routeComponents = Routes.map(({path, component}, key) => <ProtectedRoute exact user={true} path={path} component={component} key={key} />);
+  const routeComponents = Routes.map(({path, component, usersCanSee}, key) => <ProtectedRoute exact users={usersCanSee} path={path} component={component} key={key} />);
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <NavBar />
-
         <Switch>
           {routeComponents}
         </Switch>
