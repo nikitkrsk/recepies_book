@@ -1,6 +1,6 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Switch, withRouter } from "react-router-dom";
 
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -10,22 +10,36 @@ import NavBar from "../components/navbar/index";
 import { themesConfig } from "../themes/main";
 import { Routes } from "../components/routes/routes";
 import { ProtectedRoute } from "../helpers/protectedRoute";
-function App() {
+import { setCurrentPage } from "../components/navbar/store/current_page/CurrentPageActions";
+
+function App({ history }) {
   const state = useSelector((state) => ({
     theme: state.changeTheme.theme,
   }));
   const theme = createMuiTheme(themesConfig[state.theme]);
-  const routeComponents = Routes.map(({path, component, usersCanSee}, key) => <ProtectedRoute exact users={usersCanSee} path={path} component={component} key={key} />);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setCurrentPage(history.location.pathname));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history.location.pathname]);
+
+  const routeComponents = Routes.map(
+    ({ path, component, usersCanSee }, key) => (
+      <ProtectedRoute
+        exact
+        users={usersCanSee}
+        path={path}
+        component={component}
+        key={key}
+      />
+    )
+  );
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <NavBar />
-        <Switch>
-          {routeComponents}
-        </Switch>
-      </Router>
+      <NavBar />
+      <Switch>{routeComponents}</Switch>
     </ThemeProvider>
   );
 }
 
-export default App;
+export default withRouter(App);

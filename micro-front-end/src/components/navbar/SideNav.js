@@ -16,7 +16,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import { MenuItems } from "./MenuItems";
 import { setMenuOpen } from "./store/menu_open/MenuOpenActions";
-import { setCurrentPage } from "./store/current_page/CurrentPageActions";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -82,9 +81,6 @@ const SideNav = () => {
   const handleDrawerClose = () => {
     dispatch(setMenuOpen(false));
   };
-  const setPage = (event) => {
-    dispatch(setCurrentPage(event.currentTarget.id));
-  };
 
   const renderMenu = (type) => {
     return MenuItems.filter(el => el.type === type).map((item, i) => {
@@ -96,13 +92,13 @@ const SideNav = () => {
               }}
               className={classes.link}
               id={item.name}
-              onClick={(event) => setPage(event)}
+              // onClick={(event) => setPage(event)}
             >
               <ListItem
                 button
                 key={item.name}
                 className={
-                  state.currentPage === item.name
+                  state.currentPage === item.path
                     ? clsx(classes.activePage, {
                         [classes.activePageOpen]: state.menuOpen,
                       })

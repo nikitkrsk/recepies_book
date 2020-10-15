@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import I18n from "redux-i18n";
 import { PersistGate } from "redux-persist/integration/react";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import * as serviceWorker from "./serviceWorker";
 import App from "./containers/App";
@@ -14,7 +15,9 @@ ReactDOM.render(
   <Provider store={store}>
     <I18n translations={translations}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </PersistGate>
     </I18n>
   </Provider>,
