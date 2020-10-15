@@ -1,6 +1,7 @@
 import HomeIcon from "@material-ui/icons/Home";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import ForumIcon from "@material-ui/icons/Forum";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
 import { authRoles } from "../../helpers/authRoles";
 import SigninPage from "../../containers/signin/index";
@@ -31,8 +32,16 @@ export const Routes = [
     name: "Login",
     type: "user",
     icon: VpnKeyIcon,
-    usersCanSee: authRoles.all,
+    usersCanSee: authRoles.only_guest,
     path: "/auth",
     component: SigninPage,
+  },
+  {
+    name: "My Account",
+    type: "user",
+    icon: AccountBoxIcon,
+    usersCanSee: authRoles.user,
+    path: "/myAccount",
+    component: SelectLanguage,
   },
 ];

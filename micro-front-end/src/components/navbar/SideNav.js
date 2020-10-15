@@ -75,6 +75,8 @@ const SideNav = () => {
   const state = useSelector((state) => ({
     menuOpen: state.changeMenuOpen.menuOpen,
     currentPage: state.changeCurrentPage.currentPage,
+    role: state.loginUser.role
+
   }));
   const dispatch = useDispatch();
 
@@ -83,7 +85,8 @@ const SideNav = () => {
   };
 
   const renderMenu = (type) => {
-    return MenuItems.filter(el => el.type === type).map((item, i) => {
+    return MenuItems.filter((el) => el.type === type).map((item, i) => {
+      if (item.usersCanSee.includes(state.role)) {
         return (
           <List className={classes.listItem}>
             <Link
@@ -92,7 +95,6 @@ const SideNav = () => {
               }}
               className={classes.link}
               id={item.name}
-              // onClick={(event) => setPage(event)}
             >
               <ListItem
                 button
@@ -111,7 +113,10 @@ const SideNav = () => {
             </Link>
           </List>
         );
-      });
+      } else {
+        return <></>;
+      }
+    });
   };
   return (
     <>
