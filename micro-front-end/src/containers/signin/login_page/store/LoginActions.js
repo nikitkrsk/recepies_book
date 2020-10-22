@@ -28,7 +28,7 @@ export const LoginAction = (params) => (dispatch) => {
         role = "guest";
       }
       dispatch({ type: constants.REQUEST_SIGNIN_SUCCESS, payload: json });
-      dispatch({ type: constants.SET_USER_ROLE, payload: role})
+      dispatch({ type: constants.SET_USER_ROLE, payload: role });
     })
     .catch((error) => {
       dispatch({
@@ -38,4 +38,10 @@ export const LoginAction = (params) => (dispatch) => {
       dispatch(setNotificationMessage(error.message));
       dispatch(setShowNotificationMessage(true));
     });
+};
+
+export const LogoutAction = (params) => (dispatch) => {
+  console.log(params)
+  //TODO LOGOUT METHOD
+  dispatch({ type: constants.REQUEST_SIGNOUT_SUCCESS, payload: "ok" });
 };

@@ -1,0 +1,74 @@
+********************************** Login-Logout *************************************
+Login Reducer:
+    absolute_path: ./containers/signin/login_page/store/..
+    name: loginUser
+    state: 
+        const initialState = {
+            user: {},
+            token: "",
+            role: "guest",
+            refreshToken: "",
+            loggedIn: false,
+            isLoading: false,
+        };
+    example of state: 
+        const state = {
+            user: { id: string, 
+                    email: string, 
+                    verifiedAt: Date, 
+                    firstName: string,
+                    lastName: string,
+                    createdAt: Date,
+                    updatedAt: Date,
+                    role: string,
+                    status: string
+                  },
+            token: "some-jwt",
+            role: "user",
+            refreshToken: "some-jwt",
+            loggedIn: true,
+            isLoading: false,
+        };
+    actions: LoginAction, LogoutAction
+
+********************************** Change-Theme *************************************
+Theme Reducer:
+    absolute_path: ./components/navbar/store/choose_theme/..
+    name: changeTheme
+    state: 
+        const initialState = {
+          theme: "legacy"
+        };
+    example of state: 
+        const state = {
+            theme: "dark1"
+        };
+    actions: setTheme
+
+********************************** Change opened page status *************************************
+current_page Reducer:
+    absolute_path: ./components/navbar/store/current_page/..
+    name: changeCurrentPage
+    state: 
+        const initialState = {
+          currentPage: 'Home'
+        };
+    example of state: 
+        const state = {
+            currentPage: 'Login'
+        };
+    actions: setCurrentPage
+
+********************************** Open Side-Nav menu *************************************
+current_page Reducer:
+    absolute_path: ./components/navbar/store/menu_open/..
+    name: changeMenuOpen
+    state: 
+        const initialState = {
+          menuOpen: false
+        };
+    example of state: 
+        const state = {
+          menuOpen: true
+        };
+    actions: setMenuOpen
