@@ -13,14 +13,25 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
 import ChatIcon from "@material-ui/icons/Chat";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import { makeStyles } from "@material-ui/core/styles";
 
 import {LogoutAction } from '../../../containers/signin/login_page/store/LoginActions'
-
+const useStyles = makeStyles((theme) => ({
+  sectionMobile: {
+    display: "flex",
+    padding: "5px 30px 5px 5px",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  },
+}));
 const ProfileTopNav = () => {
   const state = useSelector((state) => ({
     loggedIn: state.loginUser.loggedIn,
   }));
   const dispatch = useDispatch()
+  const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleProfileMenuOpen = (event) => {
@@ -77,6 +88,7 @@ const ProfileTopNav = () => {
       >
         <AccountCircle />
       </IconButton>
+      <div className={classes.sectionMobile} onClick={handleProfileMenuOpen}>Profile</div>
       <Popover
         open={isMenuOpen}
         anchorEl={anchorEl}

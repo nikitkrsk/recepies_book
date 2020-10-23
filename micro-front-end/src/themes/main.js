@@ -1,6 +1,5 @@
 import { lightBlue, red } from "@material-ui/core/colors";
 
-
 export const themesConfig = {
   legacy: {
     palette: {
@@ -14,7 +13,7 @@ export const themesConfig = {
         light: lightBlue[400],
         main: lightBlue[600],
         dark: lightBlue[700],
-        contrastText: lightBlue[800]
+        contrastText: lightBlue[800],
       },
       background: {
         paper: "#FFFFFF",
@@ -25,7 +24,7 @@ export const themesConfig = {
     props: {
       MuiSvgIcon: {
         htmlColor: lightBlue[300],
-      }
+      },
     },
     status: {
       danger: "orange",
@@ -53,95 +52,72 @@ export const themesConfig = {
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#FFBE2C',
-      }
+        htmlColor: "#FFBE2C",
+      },
     },
     status: {
       danger: "orange",
     },
   },
-  dark3: {
-		palette: {
-			type: 'dark',
-			primary: {
-				light: '#C2C8D2',
-				main: '#354968',
-				dark: '#16213A'
-			},
-			secondary: {
-				light: '#F4CFCA',
-				main: '#D55847',
-				dark: '#C03325',
-				contrastText: '#FFFFFF'
-			},
-			background: {
-				paper: '#23354E',
-				default: '#1B2A3F'
-			},
-			error: red
-		},
-		status: {
-			danger: 'orange'
-		}
-	},
+
   light5: {
     palette: {
       type: "light",
       primary: {
         light: "#C2C7F1",
-        main: "#3543D0",
+        main: "#FFFFFF",
         dark: "#161EB3",
       },
       secondary: {
         light: "#B3F1FE",
-        main: "#00CFFD",
+        main: "#EF4E17",
         dark: "#00B2FC",
         contrastText: "#1E1F23",
       },
       background: {
-        paper: "#FFFFFF",
+        paper: "#F9F9F9",
         default: "#F7FAFF",
       },
       error: red,
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#00CFFD',
-      }
+        htmlColor: "#606060",
+      },
     },
     status: {
       danger: "orange",
     },
   },
   light12: {
-		palette: {
-			type: 'light',
-			primary: {
-				light: '#FFFAF6',
-				main: '#FFEDE2',
-				dark: '#FFE0CF'
-			},
-			secondary: {
-				light: '#DBD8F7',
-				main: '#887CE3',
-				dark: '#584CD0',
-				contrastText: '#FFFFFF'
-			},
-			background: {
-				paper: '#FFFFFF',
-				default: '#FCF8F5'
-			},
-			error: red
+    palette: {
+      type: "light",
+      primary: {
+        light: "#FFFAF6",
+        main: "#FFEDE2",
+        dark: "#FFE0CF",
+      },
+      secondary: {
+        light: "#DBD8F7",
+        main: "#887CE3",
+        dark: "#584CD0",
+        contrastText: "#FFFFFF",
+      },
+      background: {
+        paper: "#FFFFFF",
+        default: "#FCF8F5",
+      },
+      error: red,
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#757A8D',
-      }
+        htmlColor: "#757A8D",
+      },
     },
-		status: {
-			danger: 'orange'
-		}
-	},
+    status: {
+      danger: "orange",
+    },
+  },
   dark1: {
     palette: {
       type: "dark",
@@ -152,7 +128,7 @@ export const themesConfig = {
       },
       secondary: {
         light: "#B8E1D9",
-        main: "#129B7F", 
+        main: "#129B7F",
         dark: "#056D4F",
         contrastText: "#FFFFFF",
       },
@@ -164,9 +140,33 @@ export const themesConfig = {
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#129B7F',
-      }
-    }, 
+        htmlColor: "#129B7F",
+      },
+    },
+    status: {
+      danger: "orange",
+    },
+  },
+  dark3: {
+    palette: {
+      type: "dark",
+      primary: {
+        light: "#C2C8D2",
+        main: "#354968",
+        dark: "#16213A",
+      },
+      secondary: {
+        light: "#F4CFCA",
+        main: "#D55847",
+        dark: "#C03325",
+        contrastText: "#FFFFFF",
+      },
+      background: {
+        paper: "#23354E",
+        default: "#1B2A3F",
+      },
+      error: red,
+    },
     status: {
       danger: "orange",
     },
@@ -193,9 +193,9 @@ export const themesConfig = {
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#FFFFFF',
-      }
-    },  
+        htmlColor: "#FFFFFF",
+      },
+    },
     status: {
       danger: "orange",
     },
@@ -222,9 +222,9 @@ export const themesConfig = {
     },
     props: {
       MuiSvgIcon: {
-        htmlColor: '#00BD3E',
-      }
-    },  
+        htmlColor: "#00BD3E",
+      },
+    },
     status: {
       danger: "orange",
     },
