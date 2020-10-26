@@ -23,10 +23,6 @@ export default class AuthController {
       res.status(400).json({ error: "Invalid Credentials" });
       return;
     }
-    if (user.verifiedAt === null) {
-      res.status(400).json({ error: "Account is Not Verified" });
-      return;
-    }
     if (user.status === UserStatus.BLOCKED) {
       res.status(400).json({ error: "Your Account is Blocked, Please Contact the Administrator" });
       return;

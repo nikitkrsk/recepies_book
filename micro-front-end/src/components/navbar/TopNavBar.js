@@ -11,7 +11,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import { setMenuOpen } from "./store/menu_open/MenuOpenActions";
 import MenuTopNav from "./topNavBarElements/Menu";
-import MobileMenuTopNav from "./topNavBarElements/MobileMenu"
+import MobileMenuTopNav from "./topNavBarElements/MobileMenu";
+import NotVerifiedAccount from "../notifications/notVerifiedAccount";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -56,6 +57,8 @@ const useStyles = makeStyles((theme) => ({
 const TopNavBar = (props) => {
   const state = useSelector((state) => ({
     menuOpen: state.changeMenuOpen.menuOpen,
+    loggedIn: state.loginUser.loggedIn,
+    verifiedAt: state.loginUser.user.verifiedAt
   }));
   const dispatch = useDispatch();
 
@@ -64,6 +67,7 @@ const TopNavBar = (props) => {
   const handleDrawerOpen = () => {
     dispatch(setMenuOpen(true));
   };
+
   return (
     <>
       <AppBar
@@ -84,14 +88,19 @@ const TopNavBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
+
           <Typography variant="h6" noWrap>
             Recepies
           </Typography>
+          {state.loggedIn && state.verifiedAt === null  ?  <NotVerifiedAccount /> : "" }
+         
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuTopNav />
           </div>
-          <div className={classes.sectionMobile}><MobileMenuTopNav /></div>
+          <div className={classes.sectionMobile}>
+            <MobileMenuTopNav />
+          </div>
         </Toolbar>
       </AppBar>
     </>
