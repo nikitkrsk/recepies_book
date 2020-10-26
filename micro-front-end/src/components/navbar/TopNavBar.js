@@ -13,6 +13,8 @@ import { setMenuOpen } from "./store/menu_open/MenuOpenActions";
 import MenuTopNav from "./topNavBarElements/Menu";
 import MobileMenuTopNav from "./topNavBarElements/MobileMenu";
 import NotVerifiedAccount from "../notifications/notVerifiedAccount";
+import config from "../../config";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -90,7 +92,7 @@ const TopNavBar = (props) => {
           </IconButton>
 
           <Typography variant="h6" noWrap>
-            Recepies
+            {config.DOMAIN}
           </Typography>
           {state.loggedIn && state.verifiedAt === null  ?  <NotVerifiedAccount /> : "" }
          

@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    width: '280px',
   },
 }));
 
 const Login = () => {
   const classes = useStyles();
   const state = useSelector((state) => ({
-    notificationMessage: state.showNotification.notificationMessage,
     showNotificationMessage: state.showNotification.showNotificationMessage,
   }));
   const dispatch = useDispatch();

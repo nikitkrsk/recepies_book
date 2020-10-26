@@ -46,7 +46,7 @@ function a11yProps(index) {
   };
 }
 
-const KEYWORD = "cooking";
+const KEYWORD = "knitting";
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",

@@ -72,3 +72,16 @@ current_page Reducer:
           menuOpen: true
         };
     actions: setMenuOpen
+********************************** Request Password Change *************************************
+current_page Reducer:
+    absolute_path: ./containers/signin/forgot_password/store/..
+    name: ForgotPassword
+    state: 
+        const initialState = {
+          isLoading: false
+        };
+    example of state: 
+        const state = {
+          isLoading: true
+        };
+    actions: FPRequest
