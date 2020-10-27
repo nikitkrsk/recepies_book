@@ -13,6 +13,7 @@ import { changeTheme } from "../components/navbar/store/choose_theme/ChooseTheme
 import { changeMenuOpen } from "../components/navbar/store/menu_open/MenuOpenReducers";
 import { changeCurrentPage } from "../components/navbar/store/current_page/CurrentPageReducers";
 import { loginUser } from "../containers/signin/login_page/store/LoginReducers";
+import { registerUser } from "../containers/signin/register_page/store/RegisterReducers"
 import { showNotification } from "../components/notifications/store/notificationReducers"
 import { ForgotPassword } from "../containers/signin/forgot_password/store/ForgotPasswordReducers"
 const persistConfig = {
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   loginUser,
   changeExampleData,
   ForgotPassword,
+  registerUser,
   i18nState,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);

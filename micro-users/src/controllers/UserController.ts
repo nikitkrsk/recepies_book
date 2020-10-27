@@ -24,6 +24,7 @@ export default class AuthController {
       password: Joi.string().min(6).max(30).alphanum().required(),
       firstName: Joi.string().min(1).max(50).alphanum().required(),
       lastName: Joi.string().min(1).max(50).alphanum().required(),
+      subscription: Joi.boolean().required(),
     });
     try {
       await schema.validateAsync(data);
@@ -189,6 +190,7 @@ export default class AuthController {
       password: Joi.string().min(6).max(30).alphanum(),
       firstName: Joi.string().min(1).max(50).alphanum(),
       lastName: Joi.string().min(1).max(50).alphanum(),
+      subscription: Joi.boolean(),
       personal_data: Joi.object().keys({
         profile_picture: Joi.string().max(200),
         about_me: Joi.string().max(250),

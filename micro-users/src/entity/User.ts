@@ -44,6 +44,9 @@ export class User extends BaseEntity {
   @Column()
   lastName: string;
 
+  @Column({default: false})
+  subscription: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

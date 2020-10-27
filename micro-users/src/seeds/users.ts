@@ -8,6 +8,7 @@ export const UserSeed = [
         lastName: "Durden",
         verifiedAt: new Date(),
         role : UserRole.ADMIN,
+        subscription: true,
         status : UserStatus.ACTIVE
     },
     {

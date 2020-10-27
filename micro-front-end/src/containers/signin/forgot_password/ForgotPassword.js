@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-import { PageNotifications } from "../../../components/notifications/notificationsService";
 import { FPRequest } from "./store/ForgotPasswordActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,9 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const ForgotPassword = () => {
-  const state = useSelector((state) => ({
-    showNotificationMessage: state.showNotification.showNotificationMessage,
-  }));
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [disabled, setDisabled] = useState(true);
@@ -71,8 +67,6 @@ const ForgotPassword = () => {
   };
   return (
     <>
-      {state.showNotificationMessage ? <PageNotifications /> : ""}
-
       <div className={classes.fullPage}>
         <div className={classes.leftSide}>
           <div className={classes.imageCentered}>

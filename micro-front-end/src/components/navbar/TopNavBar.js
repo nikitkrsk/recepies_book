@@ -14,6 +14,7 @@ import MenuTopNav from "./topNavBarElements/Menu";
 import MobileMenuTopNav from "./topNavBarElements/MobileMenu";
 import NotVerifiedAccount from "../notifications/notVerifiedAccount";
 import config from "../../config";
+import { PageNotifications } from "../../components/notifications/notificationsService";
 
 const drawerWidth = 240;
 
@@ -60,8 +61,10 @@ const TopNavBar = (props) => {
   const state = useSelector((state) => ({
     menuOpen: state.changeMenuOpen.menuOpen,
     loggedIn: state.loginUser.loggedIn,
-    verifiedAt: state.loginUser.user.verifiedAt
+    verifiedAt: state.loginUser.user.verifiedAt,
+    showNotificationMessage: state.showNotification.showNotificationMessage,
   }));
+
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -72,6 +75,8 @@ const TopNavBar = (props) => {
 
   return (
     <>
+      {state.showNotificationMessage ? <PageNotifications /> : ""}
+
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -94,8 +99,12 @@ const TopNavBar = (props) => {
           <Typography variant="h6" noWrap>
             {config.DOMAIN}
           </Typography>
-          {state.loggedIn && state.verifiedAt === null  ?  <NotVerifiedAccount /> : "" }
-         
+          {state.loggedIn && state.verifiedAt === null ? (
+            <NotVerifiedAccount />
+          ) : (
+            ""
+          )}
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <MenuTopNav />

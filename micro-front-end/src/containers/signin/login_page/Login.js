@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,6 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
 
-import { PageNotifications } from "../../../components/notifications/notificationsService";
 import { LoginAction } from "./store/LoginActions";
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,9 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const state = useSelector((state) => ({
-    showNotificationMessage: state.showNotification.showNotificationMessage,
-  }));
+
   const dispatch = useDispatch();
   const [form, setForm] = useState({
     email: "",
@@ -61,7 +58,6 @@ const Login = () => {
   };
   return (
     <div className={classes.paper}>
-      {state.showNotificationMessage ? <PageNotifications /> : ""}
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>

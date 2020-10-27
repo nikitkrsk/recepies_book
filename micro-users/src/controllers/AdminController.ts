@@ -43,6 +43,7 @@ export default class AuthController {
     data.password = passwordHash.generate(data.password);
     user = data;
     user.role = UserRole.ADMIN;
+    user.subscription = true;
     try {
       await userRepository.save(user);
     } catch (e) {
@@ -71,6 +72,8 @@ export default class AuthController {
       return;
     }
     userExist.role = UserRole.ADMIN;
+    userExist.subscription = true;
+
     try {
       await userRepository.save(userExist);
     } catch (e) {
