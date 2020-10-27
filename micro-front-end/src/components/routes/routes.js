@@ -7,6 +7,7 @@ import { authRoles } from "../../helpers/authRoles";
 import SigninPage from "../../containers/signin/index";
 import SelectLanguage from "../../components/select_language/SelectLanguage";
 import ForgotPassword from "../../containers/signin/forgot_password/ForgotPassword"
+import ResetPassword from "../../containers/signin/forgot_password/ResetPassword"
 /*
 type:  
 main -  before Divider
@@ -46,15 +47,15 @@ export const Routes = [
     component: ForgotPassword,
   },
   {
-    name: "My Account",
-    type: "user",
-    icon: AccountBoxIcon,
-    usersCanSee: authRoles.user,
-    path: "/myAccount",
-    component: SelectLanguage,
+    name: "Reset Password",
+    type: "notInTheMenu",
+    icon: VpnKeyIcon,
+    usersCanSee: authRoles.only_guest,
+    path: "/reset_password",
+    component: ResetPassword,
   },
   {
-    name: "Recover Password",
+    name: "My Account",
     type: "user",
     icon: AccountBoxIcon,
     usersCanSee: authRoles.user,

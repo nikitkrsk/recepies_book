@@ -33,3 +33,32 @@ export const FPRequest = (params) => (dispatch) => {
       dispatch(setShowNotificationMessage(true));
     });
 };
+
+export const ResetPassRequest = (params) => (dispatch) => {
+  const token = params.token
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": `application/json` },
+    body: JSON.stringify({password:params.password}),
+  };
+  dispatch({ type: constants.REQUEST_RP_PENDING });
+  fetch(`${config.API_URL}/micro_users/reset_password/reset_password/${token}`, requestOptions)
+    .then((response) => response.json())
+    .then((json) => {
+      if (json.error) {
+        throw new Error(json.error);
+      }
+      dispatch(setNotificationMessage(json.message));
+      dispatch(setNotificationSeverity('success'))
+      dispatch(setShowNotificationMessage(true));
+      dispatch({ type: constants.REQUEST_FP_SUCCESS, payload: json });
+    })
+    .catch((error) => {
+      dispatch({
+        type: constants.REQUEST_FP_ERROR,
+        payload: error.message,
+      });
+      dispatch(setNotificationMessage(error.message));
+      dispatch(setShowNotificationMessage(true));
+    });
+};

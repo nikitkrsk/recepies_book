@@ -29,11 +29,11 @@ export const sendResetPasswordEmail = async (token, host, to) => {
     const emailbody = {
         "api_key": process.env.SMTP_API_KEY,
         "to": [`Recepies User <${to}>`],
-        "sender": "REPLY_RECEPIES_SUPPORT <hi@atroshenkonikita.com>",
+        "sender": "NO_REPLY_RECEPIES_SUPPORT <hi@atroshenkonikita.com>",
         "subject": "Recepies Platform Password Reset",
         "text_body": 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
         'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-        'https://' + host + '\/reset_password\/' + token.token + '\n\n' +
+        'https://' + host + '\/reset_password?token=' + token.token + '\n\n' +
         'If you did not request this, please ignore this email and your password will remain unchanged.\n',
     }
     const params = {

@@ -12,6 +12,12 @@ export const ForgotPassword = (state = initialState, action = {}) => {
       return { ...state, isLoading: false };
     case constants.REQUEST_FP_ERROR:
       return { ...state, isLoading: false };
+    case constants.REQUEST_RP_PENDING:
+      return { ...state, isLoading: true };
+    case constants.REQUEST_RP_SUCCESS:
+      return { ...state, isLoading: false };
+    case constants.REQUEST_RP_ERROR:
+      return { ...state, isLoading: false };
     default:
       return state;
   }
