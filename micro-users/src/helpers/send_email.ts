@@ -6,7 +6,7 @@ export const sendVerificationEmail = async (token, host, to) => {
         "to": [`Recepies User <${to}>`],
         "sender": "NO_REPLY_RECEPIES_SUPPORT <hi@atroshenkonikita.com>",
         "subject": "Verify Your Account at Recepies.dev",
-        "text_body": 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps:\/\/' + host + '\/api\/micro_users\/user\/confirm_email\/' + token.token + '\n',
+        "text_body": 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttps://' + host + '\/confirm_email?token=' + token.token + '\n\n',
     }
     const params = {
         method: "POST",

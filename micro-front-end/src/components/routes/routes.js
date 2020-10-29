@@ -8,6 +8,7 @@ import SigninPage from "../../containers/signin/index";
 import SelectLanguage from "../../components/select_language/SelectLanguage";
 import ForgotPassword from "../../containers/signin/forgot_password/ForgotPassword"
 import ResetPassword from "../../containers/signin/forgot_password/ResetPassword"
+import ConfirmEmail from "../../containers/signin/register_page/ConfirmEmail"
 /*
 type:  
 main -  before Divider
@@ -53,6 +54,14 @@ export const Routes = [
     usersCanSee: authRoles.only_guest,
     path: "/reset_password",
     component: ResetPassword,
+  },
+  {
+    name: "Confirm Email",
+    type: "notInTheMenu",
+    icon: VpnKeyIcon,
+    usersCanSee: authRoles.all,
+    path: "/confirm_email",
+    component: ConfirmEmail,
   },
   {
     name: "My Account",

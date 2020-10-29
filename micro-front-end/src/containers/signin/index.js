@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
+import { useSelector } from "react-redux";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Paper from "@material-ui/core/Paper";
@@ -14,6 +15,7 @@ import Tab from "@material-ui/core/Tab";
 
 import Login from "./login_page/Login";
 import Register from "./register_page/Register"
+import RegisterSuccessfuly from "./register_page/RegisterSuccessfuly"
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -68,7 +70,9 @@ export default function SigninPage() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
+  const state = useSelector((state) => ({
+    registerStatus: state.registerUser.registerStatus,
+  }));
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -106,7 +110,7 @@ export default function SigninPage() {
             <Login />
           </TabPanel>
           <TabPanel value={value} index={1} dir={theme.direction}>
-            <Register />
+           {state.registerStatus ? <RegisterSuccessfuly /> : <Register />} 
           </TabPanel>
         </SwipeableViews>
       </Grid>
